@@ -31,6 +31,5 @@ logging:
 
 file:
   path: H:\data\images
-  oss: true # true为开启，关闭则走本地存储
 
 
