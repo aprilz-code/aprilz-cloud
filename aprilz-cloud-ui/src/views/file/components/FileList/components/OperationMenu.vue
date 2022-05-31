@@ -86,14 +86,16 @@ export default {
       get() {
         let res = {
           filePath: this.filePath,
-          isDir: 0
+          isDir: 0,
+          IsOss: this.$store.getters.userInfoObj.isOss
         }
         return res
       },
       set() {
         return {
           filePath: '/',
-          isDir: 0
+          isDir: 0,
+          IsOss: this.$store.getters.userInfoObj.isOss
         }
       }
     },

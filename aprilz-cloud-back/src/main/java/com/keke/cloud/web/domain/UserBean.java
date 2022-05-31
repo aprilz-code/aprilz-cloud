@@ -91,6 +91,9 @@ public class UserBean {
     @Column(columnDefinition = "varchar(30) comment '注册时间'")
     private String registerTime;
 
+    @Column(columnDefinition = "intr(1) comment '是否是OSS云存储 0-否, 1-是'")
+    private Integer isOss;
+
     /**
      * 验证码
      */

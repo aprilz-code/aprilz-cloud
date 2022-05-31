@@ -132,6 +132,7 @@ CREATE TABLE `user` (
                         `sex` varchar(3) DEFAULT NULL COMMENT '年龄',
                         `telephone` varchar(15) DEFAULT NULL COMMENT '手机号码',
                         `username` varchar(30) DEFAULT NULL COMMENT '用户名',
+                        `is_oss` int(1) DEFAULT NULL COMMENT '是否是OSS云存储 0-否, 1-是',
                         PRIMARY KEY (`user_id`) USING BTREE,
                         UNIQUE KEY `open_id_index` (`open_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
@@ -139,7 +140,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('8', null, null, null, null, null, null, null, null, null, 'daee50bae5b0cd67b49ad8b50be0080e', null, null, null, '2022-02-28 09:55:58', '6810977554128198', null, '15118709413', 'admin');
+INSERT INTO `user` VALUES ('8', null, null, null, null, null, null, null, null, null, 'daee50bae5b0cd67b49ad8b50be0080e', null, null, null, '2022-02-28 09:55:58', '6810977554128198', null, '17666112171', 'admin',1);
 
 -- ----------------------------
 -- Table structure for userfile

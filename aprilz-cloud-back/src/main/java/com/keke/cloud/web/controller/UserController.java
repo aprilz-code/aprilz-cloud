@@ -107,7 +107,6 @@ public class UserController {
         }else{
             UserBean sessionUserBean = userService.getUserBeanByToken(token);//认证token
             if (sessionUserBean != null) {
-
                 restResult.setData(sessionUserBean);
                 restResult.setSuccess(true);
             } else {

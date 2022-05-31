@@ -48,4 +48,7 @@ public class UploadFileDTO {
     @ApiModelProperty(value = "md5码")
     private String identifier;
 
+    @ApiModelProperty(value = "isOss")
+    private Integer isOss;
+
 }

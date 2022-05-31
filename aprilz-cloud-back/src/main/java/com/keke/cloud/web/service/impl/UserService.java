@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +36,7 @@ public class UserService extends ServiceImpl<UserMapper, UserBean> implements IU
 
     @Resource
     UserMapper userMapper;
+
 
     @Override
     public UserBean getUserBeanByToken(String token){

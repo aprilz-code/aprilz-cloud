@@ -1,6 +1,5 @@
 <template>
     <div id="global-uploader">
-
         <!-- 上传 -->
         <uploader
                 ref="uploader"
@@ -100,7 +99,7 @@
             //Uploader实例
             uploader() {
                 return this.$refs.uploader.uploader;
-            }
+            },
         },
         methods: {
             // 添加文件的回调
@@ -185,7 +184,7 @@
                 }
             },
             computeMD5Success(md5, file) {
-                // 将自定义参数直接加载uploader实例的opts上
+                // 将OperationMenu的 自定义参数[uploadFileData]直接加载uploader实例的opts上
                 Object.assign(this.uploader.opts, {
                     query: {
                         ...this.params,

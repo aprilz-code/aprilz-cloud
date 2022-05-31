@@ -103,7 +103,7 @@ public class FiletransferController {
     @ApiOperation(value = "上传文件", notes = "真正的上次文件接口", tags = {"filetransfer"})
     @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request, UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
+    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request,  UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
         RestResult<UploadFileVo> restResult = new RestResult<>();
         UserBean sessionUserBean = userService.getUserBeanByToken(token);
         if (sessionUserBean == null){
@@ -118,6 +118,8 @@ public class FiletransferController {
             restResult.setErrorMessage("没权限，请联系管理员！");
             return restResult;
         }
+
+        //准备根据uploadFileDto的isOss，区分使用oss或者本地
 
         filetransferService.uploadChunk(request, uploadFileDto, sessionUserBean.getUserId());
         UploadFileVo uploadFileVo = new UploadFileVo();

@@ -47,4 +47,7 @@ public class UserLoginVo {
     @ApiModelProperty(value = "Token 接口访问凭证")
     private String token;
 
+    @ApiModelProperty(value = "1 oss 0 本地")
+    private Integer isOss;
+
 }
