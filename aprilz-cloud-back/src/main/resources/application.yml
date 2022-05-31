@@ -1,0 +1,36 @@
+server:
+  port: 11000
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://119.91.87.105:3306/keke_file?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: peiqi666
+    #配置最大文件大小
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+#mybatis配置
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.keke.cloud.web.domain
+  config-location: classpath:mybatis/mybatis-config.xml
+#mybatis-puls配置
+mybatis-plus:
+  type-aliases-package: com.keke.cloud.web.domain
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true #开启驼峰
+  global-config:
+    banner: false #是否在控制台打印图
+logging:
+  level:
+    com.keke.cloud.web.mapper: DEBUG
+
+file:
+  path: H:\data\images
+  oss: true # true为开启，关闭则走本地存储
+
+

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.keke.cloud.web.mapper.UserFileMapper">
+<!--
+语法：replace(object,search,replace)
+语义：把object对象中出现的的search全部替换成replace。
+-->
+    <update id="replaceFilePath">
+        UPDATE userfile SET file_path=REPLACE(file_path, #{oldFilePath}, #{filePath})
+        WHERE file_path LIKE N'${oldFilePath}%' and user_id = #{userId};
+    </update>
+
+    <select id="userFileList" resultType="java.util.Map">
+        select
+        user_file_id as userFileId,
+        delete_batch_num as deleteBatchNum,
+        delete_flag as deleteFlag,
+        delete_time as deleteTime,
+        extend_name as extendName,
+        a.file_id as fileId,
+        file_name as fileName,
+        file_path as filePath,
+        is_dir as isDir,
+        upload_time as uploadTime,
+        user_id as userId,
+        file_size as fileSize,
+        file_url as fileUrl,
+        identifier,
+        is_oss as isOss,
+        point_count as pointCount,
+        time_stamp_name as timeStampName
+        from userfile a
+        left join file on file.file_id = a.file_id
+        <where>
+            <if test="userFile.userId != null">
+                and a.user_id = #{userFile.userId}
+            </if>
+            <if test="userFile.filePath != null">
+                and a.file_path = #{userFile.filePath}
+            </if>
+            <if test="userFile.extendName != null">
+                and a.extend_name = #{userFile.extendName}
+            </if>
+            and a.delete_flag = 0
+        </where>
+        limit #{beginCount}, #{pageCount}
+
+    </select>
+
+    <select id="searchFileList" resultType="java.util.Map">
+        select
+        user_file_id as userFileId,
+        delete_batch_num as deleteBatchNum,
+        delete_flag as deleteFlag,
+        delete_time as deleteTime,
+        extend_name as extendName,
+        a.file_id as fileId,
+        file_name as fileName,
+        file_path as filePath,
+        is_dir as isDir,
+        upload_time as uploadTime,
+        user_id as userId,
+        file_size as fileSize,
+        file_url as fileUrl,
+        identifier,
+        is_oss as isOss,
+        point_count as pointCount,
+        time_stamp_name as timeStampName
+        from userfile a
+        left join file on file.file_id = a.file_id
+        <where>
+            <if test="userFile.userId != null">
+                and a.user_id = #{userFile.userId}
+            </if>
+            <if test="userFile.fileName != null">
+                and a.file_name like concat('%',#{userFile.fileName},'%')
+            </if>
+            and a.delete_flag = 0
+        </where>
+        limit #{beginCount}, #{pageCount}
+
+    </select>
+    <select id="selectFileByExtendName" parameterType="com.keke.cloud.web.domain.UserFile" resultType="java.util.Map">
+        select
+        user_file_id as userFileId,
+        delete_batch_num as deleteBatchNum,
+        delete_flag as deleteFlag,
+        delete_time as deleteTime,
+        extend_name as extendName,
+        a.file_id as fileId,
+        file_name as fileName,
+        file_path as filePath,
+        is_dir as isDir,
+        upload_time as uploadTime,
+        user_id as userId,
+        file_size as fileSize,
+        file_url as fileUrl,
+        identifier,
+        is_oss as isOss,
+        point_count as pointCount,
+        time_stamp_name as timeStampName
+        from userfile a
+        left join file on file.file_id = a.file_id
+        where extend_name in
+        <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName" >
+            #{fileName}
+        </foreach>
+        and user_id = #{userId}
+        and delete_flag = 0
+        limit #{beginCount}, #{pageCount}
+    </select>
+
+    <select id="selectFileNotInExtendNames" parameterType="com.keke.cloud.web.domain.UserFile" resultType="java.util.Map">
+        select
+        user_file_id as userFileId,
+        delete_batch_num as deleteBatchNum,
+        delete_flag as deleteFlag,
+        delete_time as deleteTime,
+        extend_name as extendName,
+        a.file_id as fileId,
+        file_name as fileName,
+        file_path as filePath,
+        is_dir as isDir,
+        upload_time as uploadTime,
+        user_id as userId,
+        file_size as fileSize,
+        file_url as fileUrl,
+        identifier,
+        is_oss as isOss,
+        point_count as pointCount,
+        time_stamp_name as timeStampName
+        from userfile a
+        left join file on file.file_id = a.file_id
+        where extend_name not in
+        <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName" >
+            #{fileName}
+        </foreach>
+        and user_id = #{userId}
+        and delete_flag = 0
+        limit #{beginCount},#{pageCount}
+    </select>
+
+
+    <update id="updateFilepathByFilepath">
+        UPDATE userfile SET file_path=REPLACE(file_path, #{param1}, #{param2})
+        WHERE file_path like N'${param1}%'
+    </update>
+
+    <update id="updateFilepathByPathAndName">
+        update userfile set file_path = #{param2}
+        where file_path = #{param1} and file_name = #{param3}
+        <if test="param4 != null">
+            and extend_name = #{param4}
+        </if>
+        <if test="param4 == null">
+            and extend_name is null
+        </if>
+    </update>
+
+    <select id="selectStorageSizeByUserId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT SUM(file_size) FROM userfile
+        LEFT JOIN file ON file.file_id = userfile.file_id
+        WHERE userfile.user_id = 2
+    </select>
+
+    <select id="selectCountNotInExtendNames" parameterType="com.keke.cloud.web.domain.UserFile" resultType="java.lang.Long">
+        select count(*) from userfile
+        left join file on file.file_id = userfile.file_id
+        where extend_name not in
+        <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName" >
+            #{fileName}
+        </foreach>
+        and user_id = #{userId}
+        and delete_flag = 0
+    </select>
+    <select id="selectCountByExtendName" parameterType="com.keke.cloud.web.domain.UserFile" resultType="java.lang.Long">
+        select count(*) from userfile
+        left join file on file.file_id = userfile.file_id
+        where extend_name in
+        <foreach collection="fileNameList" open="(" close=")" separator="," item="fileName" >
+            #{fileName}
+        </foreach>
+        and user_id = #{userId}
+        and delete_flag = 0
+    </select>
+</mapper>

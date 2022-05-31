@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.keke.cloud.web.mapper.RecoveryFileMapper">
+
+    <select id="selectRecoveryFileList" resultType="com.keke.cloud.web.vo.RecoveryFileListVo" parameterType="Long">
+        SELECT
+        a.recovery_file_id as recoveryFileId,
+        a.user_file_id as userFileId,
+        b.user_id as userId,
+        b.file_id as fileId,
+        b.file_name as fileName,
+        b.file_path as filePath,
+        b.extend_name as extendName,
+        b.is_dir as isDir,
+        b.upload_time as uploadTime,
+        b.delete_flag as deleteFlag,
+        a.delete_time as deleteTime,
+        a.delete_batch_num as deleteBatchNum
+        FROM recoveryfile a
+        LEFT JOIN userfile b ON a.user_file_id = b.user_file_id
+        where user_id = #{userId}
+    </select>
+</mapper>
