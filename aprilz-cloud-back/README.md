@@ -6,7 +6,7 @@
 
 简简单单的网盘系统--后端
 
-简单实现文件分片上传、秒传及断点续传的全局上传。  
+简单实现本地以及阿里云oss 文件分片上传、秒传及断点续传的全局上传。  
 
 主要用来学习[vue-simple-uploader](https://github.com/simple-uploader/vue-uploader/blob/master/README_zh-CN.md )插件
 
