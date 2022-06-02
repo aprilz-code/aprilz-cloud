@@ -104,12 +104,7 @@ public class UserBean {
     @Transient
     @TableField(exist = false)
     private String token;
-    @Transient
-    @TableField(exist = false)
-    private String downloadDomain;
-    @Transient
-    @TableField(exist = false)
-    private String viewDomain;
+
 
     /**
      * 角色列表

@@ -8,10 +8,16 @@ spring:
     username: root
     password: root
     #配置最大文件大小
+  #配置最大文件大小
   servlet:
     multipart:
       max-request-size: 100MB
       max-file-size: 100MB
+  redis:
+    host: 10.10.10.10
+    port: 6379
+    password: lilishop
+    database: 0
 #mybatis配置
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
@@ -31,5 +37,11 @@ logging:
 
 file:
   path: H:\data\images
+
+aliyun:
+  accessKeyId: aaa
+  accessKeySecret: aaa
+  bucketName: apirlz
+  endpoint: https://oss-cn-shenzhen.aliyuncs.com
 
 

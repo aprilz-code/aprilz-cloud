@@ -51,4 +51,5 @@ public class UploadFileDTO {
     @ApiModelProperty(value = "isOss")
     private Integer isOss;
 
+
 }

@@ -21,6 +21,7 @@ public class UploadFileVo {
     private boolean skipUpload;
     @ApiModelProperty(value = "是否需要合并分片", example = "true")
     private boolean needMerge;
+
     @ApiModelProperty(value = "已经上传的分片", example = "[1,2,3]")
     private List<Integer> uploaded;
 }

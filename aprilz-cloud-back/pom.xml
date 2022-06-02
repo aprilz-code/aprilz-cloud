@@ -116,5 +116,23 @@
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.amazonaws</groupId>-->
+        <!--            <artifactId>aws-java-sdk-s3</artifactId>-->
+        <!--            <version>${aws-java-sdk-s3.version}</version>-->
+        <!--        </dependency>-->
+
+        <!-- oss  -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.8.0</version>
+        </dependency>
     </dependencies>
 </project>

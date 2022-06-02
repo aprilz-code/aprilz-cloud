@@ -5,6 +5,7 @@ import com.keke.cloud.web.dto.UploadFileDTO;
 import com.keke.cloud.web.vo.UploadFileVo;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 public interface IFiletransferService {
@@ -17,7 +18,7 @@ public interface IFiletransferService {
     /*
     * 分片上传
     * */
-    void uploadChunk(HttpServletRequest request, UploadFileDTO UploadFileDto, Long userId);
+    void uploadChunk(HttpServletRequest request, UploadFileDTO UploadFileDto, Long userId) throws IOException;
     //获取已上传分片
     List<Integer> getIntegerList (String md5);
 }

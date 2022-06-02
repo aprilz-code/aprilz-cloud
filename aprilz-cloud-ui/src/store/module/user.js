@@ -39,8 +39,7 @@ export default {
     getUserInfo(context) {
       return checkUserLoginInfo().then((res) => {
         if (res.success) {
-          sessionStorage.setItem("downloadDomain", res.data.downloadDomain)
-          sessionStorage.setItem("viewDomain", res.data.viewDomain)
+
           context.commit("changeLogin", res.success);
           context.commit("changeUsername", res.data.username);
           context.commit("changeUserId", res.data.userId);

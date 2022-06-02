@@ -50,11 +50,12 @@
     export default {
         data() {
             return {
+              uploadId: 0,
                 options: {
                   //上传目标服务器
                     target: 'api/filetransfer/uploadfile', // 目标上传 URL
                   //每个分片大小
-                    chunkSize: 1024 * 1024 * 50,//50MB
+                    chunkSize: 1024 * 1024 ,//1MB
                   //上传文件时文件的参数名，默认file
                     fileParameterName: 'file',
                   //最大自动失败重试上传次数
@@ -185,6 +186,7 @@
             },
             computeMD5Success(md5, file) {
                 // 将OperationMenu的 自定义参数[uploadFileData]直接加载uploader实例的opts上
+              this.params.uploadId = this.uploadId;
                 Object.assign(this.uploader.opts, {
                     query: {
                         ...this.params,

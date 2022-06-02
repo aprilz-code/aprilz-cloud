@@ -1,8 +1,10 @@
 package com.keke.cloud.web.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.keke.cloud.common.domain.RestResult;
 import com.keke.cloud.common.util.DateUtil;
 import com.keke.cloud.common.util.FileUtil;
+import com.keke.cloud.common.util.OssUtil;
 import com.keke.cloud.common.util.PathUtil;
 import com.keke.cloud.web.domain.FileBean;
 import com.keke.cloud.web.domain.UserBean;
@@ -16,14 +18,17 @@ import com.keke.cloud.web.vo.UploadFileVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Api(value = "filetransfer", tags = "该接口为文件传输接口，主要用来做文件的上传和下载")
 @RestController
@@ -33,6 +38,9 @@ public class FiletransferController {
 
     @Resource
     IFiletransferService filetransferService;
+
+    @Autowired
+    private OssUtil OssUtil;
 
     @Resource
     FileController fileController;
@@ -66,14 +74,14 @@ public class FiletransferController {
         param.put("identifier", uploadFileDto.getIdentifier());
         synchronized (FiletransferController.class) {
             List<FileBean> list = fileService.listByMap(param);
-            if (list != null && !list.isEmpty()) {
+            String fileName = uploadFileDto.getFilename();
+            if (CollUtil.isNotEmpty(list)) {
                 FileBean file = list.get(0);
 
                 UserFile userFile = new UserFile();
                 userFile.setFileId(file.getFileId());
                 userFile.setUserId(sessionUserBean.getUserId());
                 userFile.setFilePath(uploadFileDto.getFilePath());
-                String fileName = uploadFileDto.getFilename();
                 userFile.setFileName(fileName.substring(0, fileName.lastIndexOf(".")));
                 userFile.setExtendName(FileUtil.getFileType(fileName));
                 userFile.setDeleteFlag(0);
@@ -83,6 +91,11 @@ public class FiletransferController {
                 fileService.increaseFilePointCount(file.getFileId());
                 uploadFileVo.setSkipUpload(true);
             } else {
+                //不存在则上传oss，获取oss uploadId放置redis
+                if(Objects.equals(new Integer(1), uploadFileDto.getIsOss())){
+                   OssUtil.bigFileInitUpload(fileName);
+                }
+
                 List<Integer> integerList = filetransferService.getIntegerList(uploadFileDto.getIdentifier());
                 uploadFileVo.setUploaded(integerList);
                 uploadFileVo.setSkipUpload(false);
@@ -103,7 +116,7 @@ public class FiletransferController {
     @ApiOperation(value = "上传文件", notes = "真正的上次文件接口", tags = {"filetransfer"})
     @RequestMapping(value = "/uploadfile", method = RequestMethod.POST)
     @ResponseBody
-    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request,  UploadFileDTO uploadFileDto, @RequestHeader("token") String token) {
+    public RestResult<UploadFileVo> uploadFile(HttpServletRequest request,  UploadFileDTO uploadFileDto, @RequestHeader("token") String token) throws IOException {
         RestResult<UploadFileVo> restResult = new RestResult<>();
         UserBean sessionUserBean = userService.getUserBeanByToken(token);
         if (sessionUserBean == null){

@@ -18,8 +18,9 @@ export default function install (Vue) {
   };
   //  加载缩略图
   Vue.prototype.downloadImgMin = function (row) {
-    let fileUrl = ''
-    if (row.fileUrl) {
+    let fileUrl = row.fileUrl
+
+    if (row.fileUrl && row.isOss != 1) {
         // 本地磁盘存储
         let index = row.fileUrl.lastIndexOf('.')
         fileUrl = '/resource' + row.fileUrl.substr(0, index) + '_min' + row.fileUrl.substr(index)
@@ -32,9 +33,8 @@ export default function install (Vue) {
   //获取文件下载路径
   Vue.prototype.getDownloadFilePath = function (row) {
     let fileUrl = row.fileUrl
-    let isOSS = row.isOSS
+    let isOSS = row.isOss
     if (isOSS == 1) { //阿里云OSS对象存储
-      fileUrl = "https://" + sessionStorage.getItem("downloadDomain") + fileUrl;
     } else { //本地磁盘存储
       fileUrl = '/resource' + fileUrl;
     }
@@ -43,13 +43,15 @@ export default function install (Vue) {
   //文件查看大图
   Vue.prototype.getViewFilePath = function (row) {
     let fileUrl = row.fileUrl
-    let isOSS = row.isOSS
+    let isOSS = row.isOss
     if (isOSS == 1) { //阿里云OSS对象存储
-      fileUrl = "https://" + sessionStorage.getItem("viewDomain") + fileUrl;
+
     } else { //本地磁盘存储
       //fileUrl = "api" + fileUrl;
       fileUrl = '/resource' + row.fileUrl;
     }
+
+    console.log('1111111111111==========' + fileUrl)
     return fileUrl
   };
 }
