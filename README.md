@@ -21,7 +21,7 @@ Vue2、ElementUI、vue-simple-uploader
 1. 安装一下  
 ````
   npm install --registry=https://registry.npm.taobao.org  
-  ````
+````
 2. 运行一下
 ````
   npm run build
@@ -33,6 +33,10 @@ Vue2、ElementUI、vue-simple-uploader
 
 
 #### 使用说明
+
+
+
+使用oss还是本地，需要在user表中，配置对应用户的isOss
 
 1. 登录界面
    ![Image text](image/Snipaste_2022-03-01_15-04-44.png)
