@@ -40,9 +40,9 @@ public class OssUtil {
     private String endpoint ;
     // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
     @Value("${aliyun.accessKeyId}")
-    private String accessKeyId = "LTAI5t77tSwusozRYxU5dBR5";
+    private String accessKeyId ;
     @Value("${aliyun.accessKeySecret}")
-    private String accessKeySecret = "HiHeszf3KrSLJt9cgY2cdlzDTdXE5L";
+    private String accessKeySecret ;
     // 填写Bucket名称，例如examplebucket。
     @Value("${aliyun.bucketName}")
     private String bucketName = "apirlz";
